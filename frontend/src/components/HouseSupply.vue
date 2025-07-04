@@ -25,17 +25,17 @@
             v-model="value.recruitmentCount"
             :editMode="editMode"
         />
+        <HousingProjectId
+            offline
+            label="주택단지정보"
+            v-model="value.housingProjectId"
+            :editMode="editMode"
+            @change="change"
+        />
         <SupplyStatus
             offline
             label="공급계획처리상태"
             v-model="value.supplyStatus"
-            :editMode="editMode"
-            @change="change"
-        />
-        <HousingProjectId
-            offline
-            label="주택사업 ID"
-            v-model="value.housingProjectId"
             :editMode="editMode"
             @change="change"
         />

@@ -25,13 +25,13 @@
                     <thead>
                         <tr>
                         <th>Id</th>
+                        <th>주택단지정보</th>
                         <th>단지명</th>
                         <th>단지 위치</th>
                         <th>공급계획처리상태</th>
                         <th>계획서명</th>
                         <th>공급계획담당자</th>
                         <th>모집세대수</th>
-                        <th>주택사업 ID</th>
                         <th>주택사업</th>
                         </tr>
                     </thead>
@@ -117,8 +117,8 @@
                             <String label="계획서명" v-model="selectedRow.projectName" :editMode="true"/>
                             <String label="공급계획담당자" v-model="selectedRow.manager" :editMode="true"/>
                             <Number label="모집세대수" v-model="selectedRow.recruitmentCount" :editMode="true"/>
+                            <HousingProjectId offline label="주택단지정보" v-model="selectedRow.housingProjectId" :editMode="true"/>
                             <SupplyStatus offline label="공급계획처리상태" v-model="selectedRow.supplyStatus" :editMode="true"/>
-                            <HousingProjectId offline label="주택사업 ID" v-model="selectedRow.housingProjectId" :editMode="true"/>
                             <v-divider class="border-opacity-100 my-divider"></v-divider>
                             <v-layout row justify-end>
                                 <v-btn

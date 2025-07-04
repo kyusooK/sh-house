@@ -31,8 +31,8 @@
                         <th>연장계약서류</th>
                         <th>입주연장일자</th>
                         <th>연장검증결과</th>
-                        <th>계약정보 ID</th>
-                        <th>입주정보 ID</th>
+                        <th>계약정보</th>
+                        <th>입주정보</th>
                         <th>계약정보</th>
                         <th>입주정보</th>
                         </tr>
@@ -117,8 +117,8 @@
                             <String label="연장계약서류" v-model="selectedRow.document" :editMode="true"/>
                             <Date label="입주연장일자" v-model="selectedRow.extendEndAt" :editMode="true"/>
                             <Boolean label="연장검증결과" v-model="selectedRow.isExtend" :editMode="true"/>
-                            <ContractId offline label="계약정보 ID" v-model="selectedRow.contractId" :editMode="true"/>
-                            <TenantId offline label="입주정보 ID" v-model="selectedRow.tenantId" :editMode="true"/>
+                            <ContractId offline label="계약정보" v-model="selectedRow.contractId" :editMode="true"/>
+                            <TenantId offline label="입주정보" v-model="selectedRow.tenantId" :editMode="true"/>
                             <v-divider class="border-opacity-100 my-divider"></v-divider>
                             <v-layout row justify-end>
                                 <v-btn

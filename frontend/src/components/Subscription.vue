@@ -30,17 +30,17 @@
             v-model="value.email"
             :editMode="editMode"
         />
+        <AnnouncementId
+            offline
+            label="모집공고정보"
+            v-model="value.announcementId"
+            :editMode="editMode"
+            @change="change"
+        />
         <ApplyStatus
             offline
             label="접수상태"
             v-model="value.applyStatus"
-            :editMode="editMode"
-            @change="change"
-        />
-        <AnnouncementId
-            offline
-            label="모집공고 ID"
-            v-model="value.announcementId"
             :editMode="editMode"
             @change="change"
         />

@@ -22,6 +22,9 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Embedded
+    private AnnouncementId announcementId;
+
     private String houseName;
 
     private String houseLocation;
@@ -30,15 +33,11 @@ public class Subscription {
 
     private String documentFile;
 
-    @Enumerated(EnumType.STRING)
     private ApplyStatus applyStatus;
 
     private String phoneNumber;
 
     private String email;
-
-    @Embedded
-    private AnnouncementId announcementId;
 
     @PostUpdate
     public void onPostUpdate() {

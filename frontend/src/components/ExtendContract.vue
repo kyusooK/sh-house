@@ -17,14 +17,14 @@
         />
         <ContractId
             offline
-            label="계약정보 ID"
+            label="계약정보"
             v-model="value.contractId"
             :editMode="editMode"
             @change="change"
         />
         <TenantId
             offline
-            label="입주정보 ID"
+            label="입주정보"
             v-model="value.tenantId"
             :editMode="editMode"
             @change="change"

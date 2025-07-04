@@ -25,6 +25,7 @@
                     <thead>
                         <tr>
                         <th>Id</th>
+                        <th>모집공고정보</th>
                         <th>청약단지명</th>
                         <th>청약단지위치</th>
                         <th>접수자명</th>
@@ -32,7 +33,6 @@
                         <th>접수상태</th>
                         <th>접수자휴대폰번호</th>
                         <th>접수자Email</th>
-                        <th>모집공고 ID</th>
                         <th>모집공고</th>
                         </tr>
                     </thead>
@@ -120,8 +120,8 @@
                             <String label="신청서류" v-model="selectedRow.documentFile" :editMode="true"/>
                             <String label="접수자휴대폰번호" v-model="selectedRow.phoneNumber" :editMode="true"/>
                             <String label="접수자Email" v-model="selectedRow.email" :editMode="true"/>
+                            <AnnouncementId offline label="모집공고정보" v-model="selectedRow.announcementId" :editMode="true"/>
                             <ApplyStatus offline label="접수상태" v-model="selectedRow.applyStatus" :editMode="true"/>
-                            <AnnouncementId offline label="모집공고 ID" v-model="selectedRow.announcementId" :editMode="true"/>
                             <v-divider class="border-opacity-100 my-divider"></v-divider>
                             <v-layout row justify-end>
                                 <v-btn

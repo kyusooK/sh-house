@@ -38,12 +38,12 @@ mvn spring-boot:run
 - supplyplan
 ```
  http :8088/housingProjects id="id"name="name"location="location"completionDate="completionDate"isCompletion="isCompletion"
- http :8088/houseSupplies id="id"houseName="houseName"houseLocation="houseLocation"SupplyStatus = "PLANNED"projectName="projectName"manager="manager"recruitmentCount="recruitmentCount"
+ http :8088/houseSupplies id="id"HousingProjectId := '{"id": 0}'houseName="houseName"houseLocation="houseLocation"SupplyStatus = "PLANNED"projectName="projectName"manager="manager"recruitmentCount="recruitmentCount"
 ```
 - receipt
 ```
  http :8088/announcements id="id"title="title"content="content"houseName="houseName"houseLocation="houseLocation"applyStartDate="applyStartDate"applyEndDate="applyEndDate"moveInStartDate="moveInStartDate"moveInEndDate="moveInEndDate"eligibilityCriteria="eligibilityCriteria"
- http :8088/subscriptions id="id"houseName="houseName"houseLocation="houseLocation"recipientName="recipientName"documentFile="documentFile"ApplyStatus = "RECEIVED"phoneNumber="phoneNumber"email="email"
+ http :8088/subscriptions id="id"AnnouncementId := '{"id": 0}'houseName="houseName"houseLocation="houseLocation"recipientName="recipientName"documentFile="documentFile"ApplyStatus = "RECEIVED"phoneNumber="phoneNumber"email="email"
 ```
 - notification
 ```
@@ -61,7 +61,7 @@ mvn spring-boot:run
 - contract
 ```
  http :8088/contracts id="id"title="title"houseName="houseName"houseLocation="houseLocation"content="content"contractAt="contractAt"contractEndAt="contractEndAt"name="name"phoneNumber="phoneNumber"
- http :8088/extendContracts id="id"document="document"extendEndAt="extendEndAt"isExtend="isExtend"
+ http :8088/extendContracts id="id"document="document"extendEndAt="extendEndAt"isExtend="isExtend"ContractId := '{"id": 0}'TenantId := '{"id": 0}'
 ```
 
 

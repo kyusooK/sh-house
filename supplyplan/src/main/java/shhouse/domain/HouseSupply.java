@@ -22,11 +22,13 @@ public class HouseSupply {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Embedded
+    private HousingProjectId housingProjectId;
+
     private String houseName;
 
     private String houseLocation;
 
-    @Enumerated(EnumType.STRING)
     private SupplyStatus supplyStatus;
 
     private String projectName;
@@ -34,9 +36,6 @@ public class HouseSupply {
     private String manager;
 
     private Integer recruitmentCount;
-
-    @Embedded
-    private HousingProjectId housingProjectId;
 
     @PostUpdate
     public void onPostUpdate() {

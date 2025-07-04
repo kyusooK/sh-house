@@ -48,6 +48,7 @@ public class HouseSupply {
     public void examineSupplyplan(ExamineSupplyplanCommand examineSupplyplanCommand) {
         repository().findById(this.getId()).ifPresent(houseSupply -> {
             if(examineSupplyplanCommand.getIsApprove() == true){
+                this.setIsApprove(true);
                 this.setSupplyStatus(SupplyStatus.APPROVED);
                 repository().save(houseSupply);
 
@@ -55,6 +56,7 @@ public class HouseSupply {
                 supplyPlanApproved.publishAfterCommit();
             }else{
                 this.setSupplyStatus(SupplyStatus.DISAPPROVED);
+                this.setIsApprove(true);
                 repository().save(houseSupply);
 
                 SupplyPlanDisApproved supplyPlanDisApproved = new SupplyPlanDisApproved(this);

@@ -39,6 +39,24 @@ public class Subscription {
 
     private Boolean isApprove;
 
+    @PrePersist
+    public void onPrePersist() {
+        // 저장 전에 announcementId로 정보 조회하여 설정
+        if (this.announcementId != null && this.announcementId.getId() != null) {
+            AnnouncementRepository announcementRepository = ReceiptApplication.applicationContext.getBean(
+                AnnouncementRepository.class
+            );
+            
+            announcementRepository.findById(this.announcementId.getId()).ifPresent(announcement -> {
+                this.houseName = announcement.getHouseName();
+                this.houseLocation = announcement.getHouseLocation();
+            });
+        }
+        
+        // applyStatus를 RECEIVED로 설정
+        this.applyStatus = ApplyStatus.RECEIVED;
+    }
+
     public static SubscriptionRepository repository() {
         SubscriptionRepository subscriptionRepository = ReceiptApplication.applicationContext.getBean(
             SubscriptionRepository.class

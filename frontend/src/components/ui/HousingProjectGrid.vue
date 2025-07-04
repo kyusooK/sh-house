@@ -18,7 +18,7 @@
                 <v-btn :disabled="!selectedRow" style="margin-left: 5px;" @click="openEditDialog()" class="contrast-primary-text" small color="primary">
                     <v-icon small>mdi-pencil</v-icon>수정
                 </v-btn>
-                <v-btn :disabled="!selectedRow" style="margin-left: 5px;" @click="processCompletionDialog = true" class="contrast-primary-text" small color="primary" :disabled="!hasRole('담당자')">
+                <v-btn :disabled="!selectedRow || !hasRole('담당자')" style="margin-left: 5px;" @click="processCompletionDialog = true" class="contrast-primary-text" small color="primary">
                     <v-icon small>mdi-minus-circle-outline</v-icon>준공처리
                 </v-btn>
                 <v-dialog v-model="processCompletionDialog" width="500">

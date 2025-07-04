@@ -1,0 +1,100 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+#<<< API Gateway / Routes
+      routes:
+        - id: supplyplan
+          uri: http://localhost:8082
+          predicates:
+            - Path=/housingProjects/**, /houseSupplies/**, 
+        - id: receipt
+          uri: http://localhost:8083
+          predicates:
+            - Path=/announcements/**, /subscriptions/**, /getAnnouncements/**
+        - id: notification
+          uri: http://localhost:8084
+          predicates:
+            - Path=/notifications/**, 
+        - id: winningresult
+          uri: http://localhost:8085
+          predicates:
+            - Path=/winners/**, /winningDashboards/**
+        - id: resident
+          uri: http://localhost:8086
+          predicates:
+            - Path=/tenants/**, /maintenances/**, 
+        - id: contract
+          uri: http://localhost:8087
+          predicates:
+            - Path=/contracts/**, /extendContracts/**, /contractDashboards/**
+        - id: frontend
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+#>>> API Gateway / Routes
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: supplyplan
+          uri: http://supplyplan:8080
+          predicates:
+            - Path=/housingProjects/**, /houseSupplies/**, 
+        - id: receipt
+          uri: http://receipt:8080
+          predicates:
+            - Path=/announcements/**, /subscriptions/**, 
+        - id: notification
+          uri: http://notification:8080
+          predicates:
+            - Path=/notifications/**, 
+        - id: winningresult
+          uri: http://winningresult:8080
+          predicates:
+            - Path=/winners/**, 
+        - id: resident
+          uri: http://resident:8080
+          predicates:
+            - Path=/tenants/**, /maintenances/**, 
+        - id: contract
+          uri: http://contract:8080
+          predicates:
+            - Path=/contracts/**, /extendContracts/**, 
+        - id: frontend
+          uri: http://frontend:8080
+          predicates:
+            - Path=/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080

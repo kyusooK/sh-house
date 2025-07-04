@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: supplyplan
+  labels:
+    app: supplyplan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: supplyplan
+  template:
+    metadata:
+      labels:
+        app: supplyplan
+    spec:
+      containers:
+        - name: supplyplan
+          image: "username/supplyplan:latest"
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 15
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5

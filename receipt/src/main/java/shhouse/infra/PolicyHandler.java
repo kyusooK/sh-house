@@ -25,5 +25,23 @@ public class PolicyHandler {
 
     @StreamListener(KafkaProcessor.INPUT)
     public void whatever(@Payload String eventString) {}
+
+    @StreamListener(
+        value = KafkaProcessor.INPUT,
+        condition = "headers['type']=='SupplyPlanApproved'"
+    )
+    public void wheneverSupplyPlanApproved_RegisterAnnouncement(
+        @Payload SupplyPlanApproved supplyPlanApproved
+    ) {
+        SupplyPlanApproved event = supplyPlanApproved;
+        System.out.println(
+            "\n\n##### listener RegisterAnnouncement : " +
+            supplyPlanApproved +
+            "\n\n"
+        );
+
+        // Sample Logic //
+        Announcement.registerAnnouncement(event);
+    }
 }
 //>>> Clean Arch / Inbound Adaptor

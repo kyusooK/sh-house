@@ -44,48 +44,35 @@ public class Tenant {
         return tenantRepository;
     }
 
-    //<<< Clean Arch / Port Method
     public void moveIn() {
-        //implement business logic here:
-
+        repository().findById(this.getId()).ifPresent(tenant -> {
+            tenant.setIsMoveIn(true);
+            repository().save(tenant);
+        });
     }
 
-    //>>> Clean Arch / Port Method
-    //<<< Clean Arch / Port Method
     public void leave() {
-        //implement business logic here:
+        repository().findById(this.getId()).ifPresent(tenant -> {
+            tenant.setIsLeaving(true);
+            repository().save(tenant);
 
-        Left left = new Left(this);
-        left.publishAfterCommit();
+            Left left = new Left(tenant);
+            left.publishAfterCommit();
+        });
     }
 
-    //>>> Clean Arch / Port Method
-
-    //<<< Clean Arch / Port Method
     public static void registerTenant(Contracted contracted) {
-        //implement business logic here:
-
-        /** Example 1:  new item 
         Tenant tenant = new Tenant();
+        tenant.setHouseName(contracted.getHouseName());
+        tenant.setHouseLocation(contracted.getHouseLocation());
+        tenant.setTenantName(contracted.getName());
+        tenant.setTenantPhone(contracted.getPhoneNumber());
+        tenant.setContractStartAt(contracted.getContractAt());
+        tenant.setContractEndAt(contracted.getContractEndAt());
         repository().save(tenant);
 
         TenantRegistered tenantRegistered = new TenantRegistered(tenant);
         tenantRegistered.publishAfterCommit();
-        */
-
-        /** Example 2:  finding and process
-        
-
-        repository().findById(contracted.get???()).ifPresent(tenant->{
-            
-            tenant // do something
-            repository().save(tenant);
-
-            TenantRegistered tenantRegistered = new TenantRegistered(tenant);
-            tenantRegistered.publishAfterCommit();
-
-         });
-        */
 
     }
 

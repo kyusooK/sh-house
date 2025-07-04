@@ -9,8 +9,6 @@ import java.util.Map;
 import javax.persistence.*;
 import lombok.Data;
 import shhouse.SupplyplanApplication;
-import shhouse.domain.SupplyPlanApproved;
-import shhouse.domain.SupplyPlanDisApproved;
 
 @Entity
 @Table(name = "HouseSupply_table")
@@ -21,9 +19,6 @@ public class HouseSupply {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Embedded
-    private HousingProjectId housingProjectId;
 
     private String houseName;
 
@@ -37,16 +32,10 @@ public class HouseSupply {
 
     private Integer recruitmentCount;
 
-    @PostUpdate
-    public void onPostUpdate() {
-        SupplyPlanApproved supplyPlanApproved = new SupplyPlanApproved(this);
-        supplyPlanApproved.publishAfterCommit();
+    @Embedded
+    private HousingProjectId housingProjectId;
 
-        SupplyPlanDisApproved supplyPlanDisApproved = new SupplyPlanDisApproved(
-            this
-        );
-        supplyPlanDisApproved.publishAfterCommit();
-    }
+    private Boolean isApprove;
 
     public static HouseSupplyRepository repository() {
         HouseSupplyRepository houseSupplyRepository = SupplyplanApplication.applicationContext.getBean(
@@ -54,5 +43,26 @@ public class HouseSupply {
         );
         return houseSupplyRepository;
     }
+
+    //<<< Clean Arch / Port Method
+    public void examineSupplyplan(ExamineSupplyplanCommand examineSupplyplanCommand) {
+        repository().findById(this.getId()).ifPresent(houseSupply -> {
+            if(examineSupplyplanCommand.getIsApprove() == true){
+                this.setSupplyStatus(SupplyStatus.APPROVED);
+                repository().save(houseSupply);
+
+                SupplyPlanApproved supplyPlanApproved = new SupplyPlanApproved(this);
+                supplyPlanApproved.publishAfterCommit();
+            }else{
+                this.setSupplyStatus(SupplyStatus.DISAPPROVED);
+                repository().save(houseSupply);
+
+                SupplyPlanDisApproved supplyPlanDisApproved = new SupplyPlanDisApproved(this);
+                supplyPlanDisApproved.publishAfterCommit();
+            }
+        });
+    }
+    //>>> Clean Arch / Port Method
+
 }
 //>>> DDD / Aggregate Root

@@ -9,8 +9,6 @@ import java.util.Map;
 import javax.persistence.*;
 import lombok.Data;
 import shhouse.ReceiptApplication;
-import shhouse.domain.SubscriptionApproved;
-import shhouse.domain.SubscriptionDisApproved;
 
 @Entity
 @Table(name = "Subscription_table")
@@ -21,9 +19,6 @@ public class Subscription {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    @Embedded
-    private AnnouncementId announcementId;
 
     private String houseName;
 
@@ -39,18 +34,10 @@ public class Subscription {
 
     private String email;
 
-    @PostUpdate
-    public void onPostUpdate() {
-        SubscriptionApproved subscriptionApproved = new SubscriptionApproved(
-            this
-        );
-        subscriptionApproved.publishAfterCommit();
+    @Embedded
+    private AnnouncementId announcementId;
 
-        SubscriptionDisApproved subscriptionDisApproved = new SubscriptionDisApproved(
-            this
-        );
-        subscriptionDisApproved.publishAfterCommit();
-    }
+    private Boolean isApprove;
 
     public static SubscriptionRepository repository() {
         SubscriptionRepository subscriptionRepository = ReceiptApplication.applicationContext.getBean(
@@ -58,5 +45,26 @@ public class Subscription {
         );
         return subscriptionRepository;
     }
+
+    //<<< Clean Arch / Port Method
+    public void checkSubscription(CheckSubscriptionCommand checkSubscriptionCommand) {
+        repository().findById(this.getId()).ifPresent(subscription -> {
+            if(checkSubscriptionCommand.getIsApprove() == true){
+                this.setApplyStatus(ApplyStatus.APPROVED);
+                repository().save(subscription);
+
+                SubscriptionApproved subscriptionApproved = new SubscriptionApproved(this);
+                subscriptionApproved.publishAfterCommit();
+            }else{
+                this.setApplyStatus(ApplyStatus.DISAPPROVED);
+                repository().save(subscription);
+
+                SubscriptionDisApproved subscriptionDisApproved = new SubscriptionDisApproved(this);
+                subscriptionDisApproved.publishAfterCommit();
+            }
+        });
+    }
+    //>>> Clean Arch / Port Method
+
 }
 //>>> DDD / Aggregate Root

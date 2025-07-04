@@ -24,6 +24,16 @@ export default defineComponent({
         'after-nav-items': () => slots['after-vertical-nav-items']?.(),
       })
 
+      // 👉 Banner
+      const banner = h('div', { class: ['layout-banner'] }, [
+        h('div', { class: 'banner-content-container' }, [
+          h('img', { 
+            src: '../../src/images/banner.png', 
+            alt: '베너 이미지',
+            class: 'banner-image'
+          })
+        ])
+      ])
 
       // 👉 Navbar
       const navbar = h('header', { class: ['layout-navbar navbar-blur'] }, [
@@ -57,6 +67,7 @@ export default defineComponent({
         verticalNav,
         h('div', { class: 'layout-content-wrapper' }, [
           navbar,
+          banner,
           main,
           footer,
         ]),
@@ -118,6 +129,27 @@ export default defineComponent({
   // 👉 Footer
   .layout-footer {
     @include mixins.boxed-content;
+  }
+
+  // 👉 Banner
+  .layout-banner {
+    @include mixins.boxed-content;
+    background-color: var(--v-theme-surface);
+    
+    .banner-content-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      block-size: 200px;
+      overflow: hidden;
+      
+      .banner-image {
+        block-size: 100%;
+        inline-size: 100%;
+        object-fit: cover;
+        display: block;
+      }
+    }
   }
 
   // 👉 Layout overlay

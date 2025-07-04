@@ -39,8 +39,10 @@ public class HousingProject {
     public void processCompletion(
         ProcessCompletionCommand processCompletionCommand
     ) {
-        //implement business logic here:
-
+        repository().findById(this.getId()).ifPresent(housingProject -> {
+            housingProject.setIsCompletion(true);
+            repository().save(housingProject);
+        });
     }
     //>>> Clean Arch / Port Method
 
